@@ -1,67 +1,76 @@
-<?php
-include 'functions/helper.php';
-session_start();
-
-// Directing to the login.php
-(!isset($_SESSION['login']) || $_SESSION['login'] == false) ? header('Location:login.php') : false;
-
-// Save the user's message
-$about = file_get_contents('db/' . session('user_name') . '.txt');
-?>
-
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <title>Home</title>
-  <style>
-    body.bg-dark { background: #181818 !important; }
-    button {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-    }
-    form { position: relative; }
-  </style>
 </head>
-
-<body class="<?= cookies('color') ? cookies('color') : 'bg-dark' ?>">
-  <div class="d-flex align-items-center justify-content-center p-4"><img height="" src="" alt=""></div>
-  <div class="container d-flex align-items-center justify-content-center">
-    <!-- PHP -->
-    <div class="card <?= cookies('color') ? cookies('color') : 'bg-dark' ?>" style="width: 18rem;">
-      <div class="card-header bg-primary"> My Profile </div>
-      <div class="card-body">
-        <!--PHP-->
-        <h5 class="card-title text-warning"><?= session('user_name') ?></h5>
-        <!--PHP-->
-        <h6 class="card-subtitle mb-2 text-muted"><?= session('e_mail') ?></h6>
-        <!--PHP-->
-        <?php
-        if (get('operation') == 'true') {
-          echo "<div class='alert alert-success'>Successfuly saved</div>";
-        } elseif (get('operation') == 'false') {
-          echo "<div class='alert alert-danger'>Failed to save!</div>";
-        }
-        ?>
-        <form action="operations.php?operation=about" method="post">
-          <!--PHP-->
-          <textarea class="form-control <?= cookies('color') ? cookies('color') : 'bg-dark' ?> text-primary" 
-          name="about" id="" cols="30" rows="10"><?= htmlspecialchars_decode($about) ?></textarea>
-          <button class="btn btn-sm btn-primary" type="submit">Save</button>
-        </form>
-        <a href="operations.php?operation=logout" class="btn btn-success btn-sm mt-2 w-100">End Session</a><br>
+<body>
+  <header>
+    <nav>
+      <div>
+        <h3>Murat Yaşar</h3>
+        <ul class="menu-main">
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="#">PRODUCTS</a></li>
+          <li><a href="#">SALES</a></li>
+          <li><a href="#">MEMBERS+</a></li>
+          <li><a href="#">CONTACT</a></li>
+        </ul>
       </div>
+      <ul class="menu-members">
+        <li><a href="#">SIGN UP</a></li>
+        <li><a href="#" class="header-login-a">LOGIN</a></li>
+      </ul>
+    </nav>
+  </header>
 
-      <div class="card-footer bg-info d-flex align-items-center justify-content-between">
-        <a href="operations.php?operation=theme&color=bg-light" class="btn btn-sm btn-light">Light Mod</a>
-        <a href="operations.php?operation=theme&color=bg-dark" class="btn btn-sm btn-dark">Dark Mod</a>
+  <section class="index-intro">
+    <div class="index-intro-bg">
+      <div class="wrapper">
+        <div class="index-intro-c1">
+          <div class="video"></div>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure reprehenderit est aliquid delectus laudantium voluptas laborum excepturi eos dolorum temporibus soluta id atque, quos totam recusandae porro! Sequi, ex ipsam!</p>
+        </div>
+        <div class="index-intro-c2">
+          <h2>We make the <br>professional<br> difference</h2>
+          <a href="#">Find it here</a>
+        </div>
       </div>
     </div>
-  </div>
-</body>
+  </section>
 
+  <section class="index-login">
+    <div class="wrapper">
+      <div class="index-login-signup">
+        <h4>SIGN UP</h4>
+        <p>Don't you have an account yet! Sign up here!</p>
+        <form action="includes/signup.inc.php" method="post">
+          <input type="text" name="uid" placeholder="Username">
+          <input type="password" name="pwd" placeholder="Password">
+          <input type="password" name="pwdRepeat" placeholder="Repeat Password">
+          <input type="email" name="email" placeholder="E-mail">
+          <br>
+          <button type="submit" name="submit">SIGN UP</button>
+        </form>
+      </div>
+      <div class="index-login-login">
+        <h4>LOGIN</h4>
+        <p>Don't you have an account yet! Sign up here!</p>
+        <form action="includes/login.inc.php" method="post">
+          <input type="text" name="uid" placeholder="Username">
+          <input type="password" name="pwd" placeholder="Password">
+          <br>
+          <button type="submit" name="submit">LOGIN</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</body>
 </html>
